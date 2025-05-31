@@ -16,9 +16,9 @@ const questions = [
     }
 ];
 
-let currentQuestion = 0;
-let started = false;
-let userAnswers = new Array(questions.length).fill(null);
+let currentQuestion;
+let started
+let userAnswers;
 
 const questionEl = document.getElementById('question');
 const optionsEl = document.getElementById('options')
@@ -29,22 +29,24 @@ document.getElementById('prevBtn').onclick = previousQuestion;
 document.getElementById('nextBtn').onclick = nextQuestion;
 document.getElementById('startBtn').onclick = startQuiz;
 document.getElementById('resetBtn').onclick = restartQuiz;
-// document.getElementById('submitBtn').onclick = submitQuiz;
+document.getElementById('submitBtn').onclick = submitQuiz;
 
 
 
 
 function startQuiz() {
     started = true
-    currentQuestion = 0;
+    currentQuestion = localStorage.getItem('currentQuestion') || 0;
+    localStorage.setItem('currentQuestion', currentQuestion);
+    localStorage.setItem('started', true);
     scoreBox.textContent = '';
-    userAnswers.fill(null);
+    userAnswers = JSON.parse(localStorage.getItem('userAnswers'))
     showQuestions();
 }
 
 function showQuestions() {
-    const question = questions[currentQuestion];
-    questionEl.textContent = `Q.${currentQuestion + 1}: ${question?.question}`
+    const question = questions[localStorage.getItem('currentQuestion')];
+    questionEl.textContent = `Q.${+localStorage.getItem('currentQuestion') + 1}: ${question?.question}`
     optionsEl.textContent = ''
     question.options.forEach((option, index) => {
         const btn = document.createElement('div');
@@ -57,6 +59,7 @@ function showQuestions() {
 
         btn.onclick = () => {
             userAnswers[currentQuestion] = index
+            localStorage.setItem('userAnswers', JSON.stringify(userAnswers))
             showQuestions()
         }
         optionsEl.appendChild(btn);
@@ -68,15 +71,18 @@ function showQuestions() {
 
 
 function previousQuestion() {
-    if (currentQuestion > 0 && started) {
+    if (localStorage.getItem('currentQuestion') > 0 && started) {
         currentQuestion--;
+        localStorage.setItem('currentQuestion', +localStorage.getItem('currentQuestion') - 1)
+
         showQuestions();
     }
 }
 
 function nextQuestion() {
-    if (currentQuestion < questions.length - 1 && started) {
+    if (localStorage.getItem('currentQuestion') < questions.length - 1 && started) {
         currentQuestion++;
+        localStorage.setItem('currentQuestion', +localStorage.getItem('currentQuestion') + 1)
         showQuestions();
     }
 }
@@ -85,6 +91,7 @@ function nextQuestion() {
 
 function restartQuiz() {
     currentQuestion = 0;
+    localStorage.clear();
     started = false;
     userAnswers.fill(null);
     scoreBox.textContent = "";
@@ -94,32 +101,35 @@ function restartQuiz() {
 }
 
 
+function initializeApp() {
+    if (localStorage.getItem('started')) {
+        startQuiz();
+    } else {
+        currentQuestion = 0;
+        started = false
+        userAnswers = new Array(questions.length).fill(null)
+        localStorage.setItem('userAnswers', JSON.stringify(userAnswers))
+    }
+}
+
+
+initializeApp()
 
 
 
 
+function submitQuiz() {
+    if (localStorage.getItem('started')) {
+        let score = 0;
+        let userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+        questions.forEach((question, index) => {
+            if (userAnswers[index] === question.correct) {
+                score++;
+            }
+        })
 
+        scoreBox.textContent = `Your score is ${score} out of ${questions.length}`;
+    }
 
-
-
-
-// function restartQuiz() {
-//     currentQuestion = 0;
-//     userAnswers.fill(null);
-//     questionEl.textContent = 'Press Start to begin'
-//     optionsEl.textContent = '';
-//     scoreBox.textContent = "";
-// }
-
-
-// function submitQuiz() {
-//     let score = 0;
-//     questions.forEach((question, index) => {
-//         if (userAnswers[index] === question.correct) {
-//             score++
-//         }
-//     })
-
-//     scoreBox.textContent = `Your score is ${score} out of ${questions.length}`;
-// }
+}
 
