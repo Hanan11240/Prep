@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flashcards App</title>
+  <link rel="stylesheet" href="flash_app.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Flashcards</h1>
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-inner">
+        <div class="front" id="card-front"></div>
+        <div class="back" id="card-back"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button onclick="prevCard()">Previous</button>
+      <button onclick="flipCard()">Flip</button>
+      <button onclick="nextCard()">Next</button>
+    </div>
+  </div>
+
+  <script src="flash_app.js"></script>
+</body>
+</html>
