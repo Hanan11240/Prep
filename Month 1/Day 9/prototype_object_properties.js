@@ -5,7 +5,7 @@ o = Object.create(Object.prototype);
 o = Object.create(Object.prototype, {
   // foo is a regular data property
   foo: {
-    writable: true,
+    writable: false,
     configurable: true,
     value: "hello",
   },
@@ -20,7 +20,10 @@ o = Object.create(Object.prototype, {
     },
   },
 });
+// o.foo = "Hi"
+console.log(o.foo)
+// // Create a new object whose prototype is a new, empty
+// // object and add a single property 'p', with value 42.
+// o = Object.create({}, { p: { value: 42 } });
 
-// Create a new object whose prototype is a new, empty
-// object and add a single property 'p', with value 42.
-o = Object.create({}, { p: { value: 42 } });
+
