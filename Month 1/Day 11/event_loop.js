@@ -1,3 +1,6 @@
+// The event loop is a fundamental concept in JavaScript that enables asynchronous operations to be executed in a non-blocking manner. It is a mechanism that continuously checks if the call stack is empty. When the call stack is empty, the event loop fetches the task at the top of the microtaks(then,catch resolve,await) queue and when it is empty it goes to   callback(Task) queue and adds it to the call stack. 
+
+
 // Example 1
 
 
