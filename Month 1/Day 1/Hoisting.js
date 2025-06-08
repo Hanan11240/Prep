@@ -6,8 +6,20 @@
 // Example 1 
 // const x = 1;
 // {
-//     // const x = 2;
+    
+//     // const x = 2; no error 
 //     console.log(x);
+
+
+// }
+
+// const x = 1;
+// {
+    
+    
+//     console.log(x);
+//     // const x = 2; error since x is declared insisde scop and is in temporal  dead zone
+
 
 // }
 
@@ -38,9 +50,9 @@
 
 
 // test(); --error above is how it is hoisted
-console.log(test)
-var test = function () {
-    console.log("test")
-}
+// console.log(test)
+// var test = function () {
+//     console.log("test")
+// }
 
 
