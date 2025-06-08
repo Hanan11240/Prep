@@ -5,9 +5,10 @@
 //     console.log(x);
 // })();
 
-// console.log(typeof x);
+// console.log(x);
 
 
+//  you're storing functions that reference i, not values of i.
 // var funcs = [];
 
 // for (var i = 0; i < 3; i++) {
@@ -23,6 +24,14 @@
 
 
 
+//  What does it do?
+// On each loop iteration, i is passed as an argument to the IIFE.
+
+// Inside the IIFE, j is a new local variable scoped to that invocation.
+
+// You create a function that logs j, and push it to funcs.
+
+// This way, each function closes over its own copy of j, not the shared i.
 // var funcs = [];
 
 // for (var i = 0; i < 3; i++) {
@@ -40,8 +49,8 @@
 
 
 
-for (var i = 0; i < 3; i++) {
-    (function (j) {
-        setTimeout(() => console.log(j), 100);
-    })(i);
-}
+// for (var i = 0; i < 3; i++) {
+//     (function (j) {
+//         setTimeout(() => console.log(j), 100);
+//     })(i);
+// }

@@ -3,7 +3,7 @@
 // Output: true
 
 
-// Approach 1 o(nlogn) o(n)
+// Approach 1 o(nlogn) o(1)
 
 // function twoSum(arr, target) {
 
