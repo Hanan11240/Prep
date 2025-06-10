@@ -29,3 +29,5 @@ copy.nested.hobbies[0] = "writing";
 
 console.log(original);     
 console.log(copy);
+
+// const deepCopy = structuredClone(original);
