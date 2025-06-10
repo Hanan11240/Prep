@@ -31,3 +31,5 @@ console.log(original);
 console.log(copy);
 
 // const deepCopy = structuredClone(original);
+// const deepCopy = JSON.parse(JSON.stringify(original));
+// ⚠️ Doesn't work with functions, undefined, circular references, etc.
