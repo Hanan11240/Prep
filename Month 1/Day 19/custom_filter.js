@@ -3,15 +3,14 @@ function greaterThanTwo(el, index, arr) {
 }
 
 Array.prototype.myFilter = function (callback) {
-    let newArray = [];
+    let filteredArr = [];
     for (let index = 0; index < this.length; index++) {
-        let result = callback(this[index]);
-        if (result) {
-            newArray.push(this[index], index, this)
+        if(!!callback(this[index], index, this)) {
+            filteredArr.push(this[index]);
         }
     }
 
-    return newArray
+    return filteredArr
 }
 
 

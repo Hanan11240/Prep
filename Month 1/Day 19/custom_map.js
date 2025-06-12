@@ -3,12 +3,12 @@ function double(el, index, arr) {
 }
 
 Array.prototype.MyMap = function (callback) {
-    let newArray = [];
+    let mappedArray = [];
 
     for (let index = 0; index < this.length; index++) {
-        newArray.push(callback(this[index], index, this))
+        mappedArray.push(callback(this[index], index, this))
     }
-    return newArray;
+    return mappedArray;
 }
 
 const sample = [1, 2, 3];
