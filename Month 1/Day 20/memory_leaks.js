@@ -1,0 +1,2 @@
+// A memory leak in JavaScript occurs when your program keeps a reference to memory that is no longer needed, so the JavaScript engine (like V8 in Chrome) cannot garbage collect it. Over time, this leads to increasing memory usage and eventually performance issues or crashes.
+// https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/
