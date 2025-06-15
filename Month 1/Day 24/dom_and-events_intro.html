@@ -1,0 +1,64 @@
+<!-- The Document Object Model (DOM) is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as nodes and objects; that way, programming languages can interact with the page. -->
+
+<!-- The DOM (Document Object Model) is not a JavaScript object itself, but it is an interface provided by the browser that JavaScript can interact with to manipulate web pages. -->
+
+<!-- What is the DOM? -->
+<!-- DOM is a tree-like structure that represents the HTML document. -->
+<!-- Each HTML element (like <div>, <p>, <a>, etc.) is a node in this tree. -->
+<!-- The browser creates this structure when it loads the web page. -->
+
+<!-- JavaScript can use the DOM API to: -->
+<!-- Read elements (document.getElementById())
+
+Modify content (element.textContent = "hello")
+
+Change styles, handle events, etc. -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <textarea class="story" id="story"></textarea>
+        <button id="set-text">Set Text</button>
+        <button id="clear-text">Clear Text</button>
+    </div>
+    <script>
+        const search = document.getElementById('story');
+
+        const setText = document.getElementById('set-text')
+        const clearText = document.getElementById('clear-text')
+
+        setText.addEventListener('click', () => {
+            console.log('clicked')
+            search.textContent = "testing"
+        })
+
+        clearText.addEventListener('click', () => {
+            search.textContent = ""
+        })
+        // window.onload = () => {
+        //     const heading = document.createElement('h1');
+        //     // const headingText = document.createTextNode("Big Head!");
+        //     // heading.appendChild(headingText);
+        //     //or
+        //     heading.textContent = "Big Head!";
+        //     document.body.appendChild(heading);
+        // }
+
+
+
+    </script>
+</body>
+
+</html>

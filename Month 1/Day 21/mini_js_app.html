@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Task Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 1rem;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+      background: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .task.completed {
+      text-decoration: line-through;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Daily Task Tracker</h1>
+  <input type="text" id="taskInput" placeholder="Add a new task...">
+  <button onclick="addTask()">Add</button>
+  <input type="text" id="searchInput" placeholder="Search tasks...">
+  <div id="taskList"></div>
+  <h3 id="summary"></h3>
+
+  <script>
+    // Utils
+    function debounce(fn, delay) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    function throttle(fn, limit) {
+      let inThrottle;
+      return function (...args) {
+        if (!inThrottle) {
+          fn.apply(this, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+
+    function deepClone(obj) {
+      if (obj === null || typeof obj !== 'object') return obj;
+      if (Array.isArray(obj)) return obj.map(deepClone);
+      const clone = {};
+      for (let key in obj) clone[key] = deepClone(obj[key]);
+      return clone;
+    }
+
+    // Task class
+    function Task(text) {
+      this.id = Date.now();
+      this.text = text;
+      this.completed = false;
+    }
+    Task.prototype.toggle = function () {
+      this.completed = !this.completed;
+    };
+
+    // State
+    const TaskManager = (function () {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+      function save() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      }
+
+      return {
+        add(task) {
+          tasks.push(task);
+          save();
+        },
+        remove(id) {
+          tasks = tasks.filter(t => t.id !== id);
+          save();
+        },
+        toggle(id) {
+          const task = tasks.find(t => t.id === id);
+          if (task) task.completed = !task.completed;
+          save();
+        },
+        getAll() {
+          return deepClone(tasks);
+        }
+      };
+    })();
+
+    // DOM Logic
+    function render(tasks) {
+      const container = document.getElementById('taskList');
+      container.innerHTML = '';
+      tasks.forEach(task => {
+        const div = document.createElement('div');
+        div.className = 'task' + (task.completed ? ' completed' : '');
+        div.innerHTML = `
+          <span>${task.text}</span>
+          <div>
+            <button onclick="toggleTask(${task.id})">✔</button>
+            <button onclick="deleteTask(${task.id})">🗑</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+      throttledSummary();
+    }
+
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      if (!input.value.trim()) return;
+      const task = new Task(input.value.trim());
+      TaskManager.add(task);
+      input.value = '';
+      render(TaskManager.getAll());
+    }
+
+    function toggleTask(id) {
+      TaskManager.toggle(id);
+      render(TaskManager.getAll());
+    }
+
+    function deleteTask(id) {
+      TaskManager.remove(id);
+      render(TaskManager.getAll());
+    }
+
+    const throttledSummary = throttle(() => {
+      const tasks = TaskManager.getAll();
+      const completed = tasks.filter(t => t.completed).length;
+      document.getElementById('summary').textContent =
+        `✅ ${completed} / ${tasks.length} tasks completed.`;
+    }, 1000);
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', debounce(() => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = TaskManager.getAll().filter(t => t.text.toLowerCase().includes(query));
+      render(filtered);
+    }, 300));
+
+    render(TaskManager.getAll());
+  </script>
+</body>
+</html>
