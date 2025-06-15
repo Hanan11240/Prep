@@ -25,28 +25,46 @@ Change styles, handle events, etc. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .child {
+            border: 1px solid red;
+            padding: 2px 2px;
+        }
+    </style>
 </head>
 
 <body>
     <div>
-        <textarea class="story" id="story"></textarea>
+
+        <!-- Example 1 -->
+        <!-- <textarea class="story" id="story"></textarea>
         <button id="set-text">Set Text</button>
-        <button id="clear-text">Clear Text</button>
+        <button id="clear-text">Clear Text</button> -->
+
+        <!-- Example 3 -->
+        <div style="border: 1px solid black; height: 50px;
+        width: 100px;" id="parent">Parent</div>
+
+        <button id="add-child">Add Child</button>
+        <button id="remove-child">Remove Child</button>
     </div>
     <script>
-        const search = document.getElementById('story');
+        // Example 1
+        // const search = document.getElementById('story');
 
-        const setText = document.getElementById('set-text')
-        const clearText = document.getElementById('clear-text')
+        // const setText = document.getElementById('set-text')
+        // const clearText = document.getElementById('clear-text')
 
-        setText.addEventListener('click', () => {
-            console.log('clicked')
-            search.textContent = "testing"
-        })
+        // setText.addEventListener('click', () => {
+        //     console.log('clicked')
+        //     search.textContent = "testing"
+        // })
 
-        clearText.addEventListener('click', () => {
-            search.textContent = ""
-        })
+        // clearText.addEventListener('click', () => {
+        //     search.textContent = ""
+        // })
+
+        // Example 2
         // window.onload = () => {
         //     const heading = document.createElement('h1');
         //     // const headingText = document.createTextNode("Big Head!");
@@ -56,7 +74,30 @@ Change styles, handle events, etc. -->
         //     document.body.appendChild(heading);
         // }
 
+        const parentEl = document.getElementById('parent');
+        const btn = document.getElementById('add-child');
+        const rbtn = document.getElementById('remove-child');
 
+        btn.addEventListener('click', () => {
+            if (childExists()) {
+                return
+            }
+            const child = document.createElement('div');
+            child.classList.add('child')
+            child.textContent = 'Child'
+            parentEl.appendChild(child)
+        });
+
+        rbtn.addEventListener('click', () => {
+            const child = document.getElementsByClassName('child')[0];
+            parentEl.removeChild(child)
+        });
+
+        function childExists() {
+
+            // return parentEl.childNodes.length > 1
+            return parentEl.children.length > 0
+        }
 
     </script>
 </body>

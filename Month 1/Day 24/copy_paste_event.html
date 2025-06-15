@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Copy and Paste Example</title>
+</head>
+<body>
+
+  <h3>Try copying or pasting in the input below:</h3>
+
+  <input type="text" id="myInput" placeholder="Copy or paste text here" />
+
+  <script>
+    const input = document.getElementById('myInput');
+
+    input.addEventListener('copy', (e) => {
+      console.log('Copied text:', window.getSelection().toString());
+      alert('You copied: ' + window.getSelection().toString());
+    });
+
+    input.addEventListener('paste', (e) => {
+      const pastedText = e.clipboardData.getData('text');
+      console.log('Pasted text:', pastedText);
+      alert('You pasted: ' + pastedText);
+    });
+  </script>
+
+</body>
+</html>

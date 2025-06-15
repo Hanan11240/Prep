@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle Task Example</title>
+  <style>
+    .task {
+      cursor: pointer;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Todo List</h2>
+  <div id="taskList">
+    <div class="task">Buy groceries</div>
+    <div class="task">Do laundry</div>
+    <div class="task">Complete project</div>
+  </div>
+
+  <script>
+    const tasks = document.querySelectorAll('.task');
+
+    tasks.forEach(task => {
+      task.addEventListener('click', () => {
+        task.classList.toggle('done');
+      });
+    });
+  </script>
+
+</body>
+</html>
