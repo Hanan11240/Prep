@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -20,12 +21,22 @@
     </div> -->
 
     <!-- Example 2 -->
-    <div>
+    <!-- <div>
         <button>Button 1</button>
         <button>Button 2</button>
         <button>Button 3</button>
         <button>Button 4</button>
         <button>Button 5</button>
+    </div> -->
+
+
+    <!-- Example 3 -->
+
+    <button id="btn">Create Box</button>
+    <div id="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
     </div>
     <script>
         // Example 1
@@ -48,10 +59,31 @@
         //         console.log(event.target.innerText)
         //     })
         // })
-        const divEL = document.getElementsByTagName('div')[0];
+        // const divEL = document.getElementsByTagName('div')[0];
 
-        divEL.addEventListener('click', e => {
-            console.log(e.target.innerText)
+        // divEL.addEventListener('click', e => {
+        //     console.log(e.target.innerText)
+        // })
+
+
+        // Example 3
+
+        const container = document.getElementById('container');
+        const btn = document.getElementById('btn')
+
+
+        btn.addEventListener('click', () => {
+
+            const box = document.createElement('div');
+            box.classList.add('box');
+            container.appendChild(box)
+        })
+
+
+        container.addEventListener('click', e => {
+            if (e.target.matches('.box')) {
+                e.target.classList.toggle('click')
+            }
         })
     </script>
 </body>
