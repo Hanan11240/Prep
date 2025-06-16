@@ -1,0 +1,27 @@
+<!-- // A pointing-device button (such as a mouse's primary button) is both pressed and released while the pointer is located inside the element.
+// A touch gesture is performed on the element.
+// Any user interaction that is equivalent to a click, such as pressing the Space key or Enter key while the element is focused. Note that this only applies to elements with a default key event handler, and therefore, excludes other elements that have been made focusable by setting the tabindex attribute. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Click</button>
+    <script>
+        const button = document.querySelector("button");
+
+        button.addEventListener("click", (event) => {
+            console.log(event.pointerType) //(mouse, pen, touch, etc.).
+            console.log(event.width)
+            button.textContent = `Click count: ${event.detail}`;
+        });
+    </script>
+</body>
+
+</html>
