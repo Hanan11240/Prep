@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Memory Leak Example</title>
+</head>
+
+<body>
+    <button id="button">Click Me</button>
+    <img id="image" src="" width="100" />
+    <div id="text">Some text here</div>
+
+    <script>
+        // 🔥 Memory leak setup
+        var elements = {
+            button: document.getElementById('button'),
+            image: document.getElementById('image'),
+            text: document.getElementById('text')
+        };
+
+        function doStuff() {
+            elements.image.src = 'https://via.placeholder.com/100';
+            elements.button.click();
+            console.log(elements.text.innerHTML);
+        }
+
+        function removeButton() {
+            // ❌ Remove from DOM
+            document.body.removeChild(document.getElementById('button'));
+
+            // ⚠️ Leak: elements.button still references the button
+            // So it is not eligible for garbage collection
+        }
+
+        // Simulate DOM use and removal
+        setTimeout(doStuff, 1000);      // Use elements after 1 sec
+        setTimeout(removeButton, 3000); // Remove button after 3 sec
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!-- <script>
+  var elements = {
+    button: document.getElementById('button'),
+    image: document.getElementById('image'),
+    text: document.getElementById('text')
+  };
+
+  function doStuff() {
+    elements.image.src = 'https://via.placeholder.com/100';
+    elements.button.click();
+    console.log(elements.text.innerHTML);
+  }
+
+  function removeButton() {
+    document.body.removeChild(document.getElementById('button'));
+
+    // ✅ Fix: remove reference from elements
+    elements.button = null;
+  }
+
+  setTimeout(doStuff, 1000);
+  setTimeout(removeButton, 3000);
+</script>
+ -->

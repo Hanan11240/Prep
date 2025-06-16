@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Closure Memory Leak Example</title>
+  </head>
+  <body>
+    <button id="leak">Cause Memory Leak</button>
+    <script>
+      const leakyClosures = [];
+
+      document.getElementById('leak').addEventListener('click', () => {
+        let largeData = new Array(1e6).fill('📦'); // simulate big data
+
+        function closure() {
+          console.log(largeData[0]); // closure holds reference to largeData
+        }
+
+        leakyClosures.push(closure); // pushing to array -> never cleared
+        alert('Leak added! Total closures: ' + leakyClosures.length);
+      });
+    </script>
+  </body>
+</html>
+
+
+<!-- <script>
+  document.getElementById('leak').addEventListener('click', () => {
+    let largeData = new Array(1e6).fill('📦');
+
+    function closure() {
+      console.log(largeData[0]);
+    }
+
+    // ✅ Just use it, don't store it
+    closure();
+
+    // ✅ Let it go out of scope — now eligible for GC
+    largeData = null;
+  });
+</script>
+ -->

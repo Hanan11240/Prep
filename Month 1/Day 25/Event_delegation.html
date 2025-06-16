@@ -1,0 +1,69 @@
+<!-- The idea is that you "delegate" the handling of an event to a different element (in this case, the div, which is a parent element) instead of the actual element (the button) that received the event. -->
+
+<!-- Event delegation is a technique in JavaScript where we delegate the responsibility of handling an event to a parent element. By doing so, we avoid attaching multiple event listeners to individual elements, especially when dealing with a large number of similar elements, such as a list or a table. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Example 1 -->
+    <!-- <div>
+        <span>
+            <button>CLick Me!</button>
+        </span>
+    </div> -->
+
+    <!-- Example 2 -->
+    <div>
+        <button>Button 1</button>
+        <button>Button 2</button>
+        <button>Button 3</button>
+        <button>Button 4</button>
+        <button>Button 5</button>
+    </div>
+    <script>
+        // Example 1
+        // const divEL = document.getElementsByTagName('div')[0];
+
+        // divEL.addEventListener('click', e => {
+
+        //     if (e.target.tagName === 'BUTTON') {
+        //         console.log('Btn clicked')
+        //     }
+
+        // })
+
+        // Example 2
+        // const buttons = document.querySelectorAll('button')
+
+        // Multiple listerner events
+        // buttons.forEach(button => {
+        //     button.addEventListener("click", (event) => {
+        //         console.log(event.target.innerText)
+        //     })
+        // })
+        const divEL = document.getElementsByTagName('div')[0];
+
+        divEL.addEventListener('click', e => {
+            console.log(e.target.innerText)
+        })
+    </script>
+</body>
+
+</html>
+
+
+<!-- Benefits of Event Delegation
+Event delegation comes with several benefits:
+
+Performance Improvement: Attaching a single event listener consumes less memory than attaching individual event listeners to each element.
+Dynamic Elements: Event delegation works perfectly with dynamically added elements. Any new elements added at runtime that match the delegation criteria will automatically have the event listener.
+Code Simplification: Instead of managing multiple event listeners, we only need to manage one, resulting in cleaner and more maintainable code. -->
+
+<!-- event delegation works with any bubbling event. However, note that not all events bubble. For example, focus, blur, and mouseenter events do not bubble. -->

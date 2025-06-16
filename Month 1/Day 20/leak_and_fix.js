@@ -1,24 +1,60 @@
 // -------------------------------1: Accidental global variables-------------------------------
 // Example 1
+// memory leak
 function foo(arg) {
     bar = "this is a hidden global variable";
 }
 
+// fix
+// function foo(arg) {
+//     let bar = "this is a local variable";
+// }
+
+
 // Example 2
+
 // function foo() {
 //     this.variable = "potential accidental global";
 // }
 
+// fix
+
+// Use a factory function (better in many modern JS apps)
+// function createFoo() {
+//     return {
+//         variable: "factory pattern"
+//     };
+// }
+
+// const obj = createFoo();
+// console.log(obj.variable);
+
 // ---------------------------------- Forgotten timers or callbacks --------------------------------
 
+// memory leak
 // var someResource = getData();
-// setInterval(function(){
+//    setInterval(function(){
 //         var node = document.getElementById('Node');
 //         if(node){
 //             //  node.innerHTML = JSON.stringify(someResource));
 //         }
 
 // },1000)
+
+// fix
+// var someResource = getData(); // Assume this is large data
+
+// let intervalId = setInterval(function () {
+//     var node = document.getElementById('Node');
+
+//     if (node) {
+//         node.innerHTML = JSON.stringify(someResource);
+//     } else {
+//         // Cleanup to prevent memory leaks
+//         clearInterval(intervalId);
+//         someResource = null; // Allow garbage collection
+//     }
+// }, 1000);
 
 
 // ----------------------------- 3: Out of DOM references -------------------------------
@@ -46,4 +82,4 @@ function removeButton() {
 
 
 
-//c-------------------- 4: Closures -------------------------
+//-------------------- 4: Closures -------------------------
