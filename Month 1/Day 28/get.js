@@ -6,7 +6,7 @@
 
 // const student = {
 
-    // data property
+// data property
 //     firstName: 'Monica';
 // }
 
@@ -18,13 +18,31 @@
 // set - to define a setter method to set the property value
 
 
-const student = {
-    firstName:"Hanan",
-    get getName(){
-        return this.firstName
-    }   
-}
+// const student = {
+//     firstName:"Hanan",
+//     get getName(){
+//         return this.firstName
+//     }   
+// }
 
 
 // console.log(student.getName)
 // console.log(student.getName()) //error
+
+
+
+// Example 2
+const student = {
+    firstName: "Hanan",
+
+}
+
+
+
+Object.defineProperty(student, "getName", {
+    get: function () {
+        return this.firstName
+    }
+})
+
+console.log(student.getName)
