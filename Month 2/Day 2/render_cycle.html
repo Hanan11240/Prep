@@ -1,0 +1,93 @@
+<!-- The render cycle in JavaScript, particularly within the context of web browsers, refers to the series of steps a browser takes to display a web page, including any dynamic content generated or manipulated by JavaScript. This process is often referred to as the Critical Rendering Path -->
+
+
+
+
+<!-- 1.Parsing HTML and Building the DOM: -->
+
+<!-- The browser parses the HTML document and constructs the Document Object Model (DOM), which is a tree-like representation of the page's structure. -->
+
+<!-- 2. Parsing CSS and Building the CSSOM: -->
+<!-- The browser parses CSS stylesheets and creates the CSS Object Model (CSSOM), representing the styling rules. -->
+
+<!-- 3. Executing JavaScript: -->
+<!-- When the browser encounters a <script> tag, it pauses parsing of the HTML and CSS and executes the JavaScript code. This is a critical point because JavaScript can modify the DOM and CSSOM, potentially triggering re-calculations of layout and rendering. -->
+
+<!-- 4.Creating the Render Tree: -->
+<!-- /The browser combines the DOM and CSSOM to create the render tree, which includes only the visible elements and their computed styles. -->
+
+<!-- 5. Layout (Reflow): -->
+
+<!-- The browser calculates the size and position of each element in the render tree, determining its exact placement on the screen. -->
+
+<!--6. Painting (Repaint): -->
+
+<!-- The browser then converts the render tree and layout information into pixels on the screen, drawing the visual elements. -->
+
+
+<!----------------------------------------------------- mdn ----------------------------------------------------------------------->
+
+
+
+<!-- The Critical Rendering Path is the sequence of steps the browser goes through to convert the HTML, CSS, and JavaScript into pixels on the screen. -->
+
+<!-- The document object model is created as the HTML is parsed. The HTML may request JavaScript, which may, in turn, alter the DOM. The HTML includes or makes requests for styles, which in turn builds the CSS object model. The browser engine combines the two to create the Render Tree. Layout determines the size and location of everything on the page. Once layout is determined, pixels are painted to the screen. -->
+
+
+<!-- https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Critical_rendering_path -->
+
+
+<!-- The Rendering Tree is responsible for structuring what should actually be painted on the screen, including visible elements with computed styles. It combines information from:
+
+The DOM Tree (HTML content)
+
+The CSSOM Tree (CSS styles)
+
+📌 Think of the Rendering Tree as the “what-to-draw” plan for the browser. -->
+<!-- 🧩 The Rendering Tree determines what elements are visible, how they look, and where they go on the screen. It’s the bridge between raw content (DOM) and actual visual output (pixels). -->
+
+<!-- ✅ Key Responsibilities of the Rendering Tree
+Includes Only Visible Content
+
+It omits elements like <head> or elements with display: none.
+
+Elements with visibility: hidden are still included, but not painted.
+
+Combines DOM + CSSOM
+
+Each node in the rendering tree is a visual representation (called a "rendering object" or "layout object") of a DOM element styled with the corresponding CSS rules.
+
+Drives Layout (Reflow)
+
+Once the Rendering Tree is constructed, the browser calculates the exact position and size of each object on the screen.
+
+Feeds the Painting Process
+
+The rendering tree nodes are passed to the paint phase, which converts them into actual pixels (rasterization).
+
+ -->
+
+
+
+<!-- <body>
+  <div class="box">Hello</div>
+</body>
+ -->
+
+<!--.box {
+  color: red;
+  display: block;
+}
+  -->
+
+<!-- DOM Tree has a <div> node
+
+CSSOM has rules for .box
+
+During Rendering Tree construction:
+
+The browser finds the .box rule for the <div>
+
+It computes all relevant CSS styles (inherited + direct)
+
+It creates a RenderObject for that <div> with style info (color: red, display: block, etc.) -->
